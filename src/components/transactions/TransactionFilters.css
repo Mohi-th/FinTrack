@@ -1,0 +1,140 @@
+.tx-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tx-filters__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* Search */
+.tx-filters__search {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.tx-filters__search-icon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.tx-filters__search-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-4) var(--space-2) 36px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  height: 38px;
+  transition: all var(--transition-fast);
+}
+
+.tx-filters__search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.tx-filters__search-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.tx-filters__search-clear {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.tx-filters__search-clear:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+/* Selects */
+.tx-filters__select {
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  height: 38px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 140px;
+}
+
+.tx-filters__select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.tx-filters__select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Date inputs */
+.tx-filters__date-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tx-filters__date-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.tx-filters__date-input {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  height: 38px;
+  transition: all var(--transition-fast);
+}
+
+.tx-filters__date-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Dark colorscheme for date/select native UIs */
+.tx-filters__date-input::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+}
+
+[data-theme="light"] .tx-filters__date-input::-webkit-calendar-picker-indicator {
+  filter: none;
+}
+
+@media (max-width: 768px) {
+  .tx-filters__select {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .tx-filters__search {
+    width: 100%;
+    flex: unset;
+  }
+}

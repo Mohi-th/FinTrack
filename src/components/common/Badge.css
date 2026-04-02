@@ -1,0 +1,49 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.badge--sm {
+  padding: 2px var(--space-2);
+  font-size: 0.625rem;
+}
+
+.badge--md {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+}
+
+.badge--default {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.badge--income {
+  background: var(--color-income-light);
+  color: var(--color-income);
+}
+
+.badge--expense {
+  background: var(--color-expense-light);
+  color: var(--color-expense);
+}
+
+.badge--primary {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.badge--warning {
+  background: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+.badge--info {
+  background: var(--color-info-light);
+  color: var(--color-info);
+}

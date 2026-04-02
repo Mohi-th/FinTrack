@@ -1,0 +1,102 @@
+.recent-transactions__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-5) var(--space-3);
+}
+
+.recent-transactions__title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.recent-transactions__view-all {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: gap var(--transition-fast);
+}
+
+.recent-transactions__view-all:hover {
+  gap: var(--space-2);
+}
+
+.recent-transactions__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-tx {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  transition: background var(--transition-fast);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.recent-tx:last-child {
+  border-bottom: none;
+}
+
+.recent-tx:hover {
+  background: var(--bg-elevated);
+}
+
+.recent-tx__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.recent-tx__icon--income {
+  background: var(--color-income-light);
+  color: var(--color-income);
+}
+
+.recent-tx__icon--expense {
+  background: var(--color-expense-light);
+  color: var(--color-expense);
+}
+
+.recent-tx__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.recent-tx__desc {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-tx__meta {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.recent-tx__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.recent-tx__amount {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
