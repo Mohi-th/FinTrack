@@ -3,15 +3,14 @@ import { useSelector } from 'react-redux';
 import { selectMonthlyData } from '../../store/slices/transactionSlice';
 import { formatCurrency } from '../../utils/formatters';
 import Card from '../common/Card';
-import './Charts.css';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="chart-tooltip">
-      <p className="chart-tooltip__label">{label}</p>
+    <div className="bg-bg-secondary border border-border rounded-md px-4 py-3 shadow-md">
+      <p className="text-xs text-text-muted mb-1 font-semibold">{label}</p>
       {payload.map((entry, i) => (
-        <p key={i} className="chart-tooltip__value" style={{ color: entry.color }}>
+        <p key={i} className="text-[0.8125rem] font-semibold text-text-primary" style={{ color: entry.color }}>
           {entry.name}: {formatCurrency(entry.value)}
         </p>
       ))}
@@ -23,12 +22,12 @@ export default function BalanceTrendChart() {
   const monthlyData = useSelector(selectMonthlyData);
 
   return (
-    <Card className="chart-card animate-fade-in-up" padding="md">
-      <div className="chart-card__header">
-        <h3 className="chart-card__title">Balance Trend</h3>
-        <span className="chart-card__subtitle">Last 6 months</span>
+    <Card className="animate-fade-in-up" padding="md">
+      <div className="flex items-baseline justify-between mb-5">
+        <h3 className="text-base font-bold text-text-primary">Balance Trend</h3>
+        <span className="text-xs text-text-muted font-medium">Last 6 months</span>
       </div>
-      <div className="chart-card__body" style={{ height: 280 }}>
+      <div className="w-full" style={{ height: 280 }}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={monthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
             <defs>
@@ -41,20 +40,20 @@ export default function BalanceTrendChart() {
                 <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
             <XAxis
               dataKey="month"
-              stroke="var(--text-muted)"
+              stroke="var(--color-text-muted)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
             />
             <YAxis
-              stroke="var(--text-muted)"
+              stroke="var(--color-text-muted)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+              tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Area

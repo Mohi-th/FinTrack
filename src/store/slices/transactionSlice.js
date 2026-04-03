@@ -1,16 +1,109 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getStoredTransactions, saveTransactions } from '../../utils/storage';
-import { generateMockTransactions } from '../../data/mockData';
+import { getMockTransactions } from '../../data/mockData';
 import { generateId } from '../../utils/formatters';
 
-// Load initial data: localStorage first, else generate mock data
+// Load initial data: localStorage first, else use hardcoded mock data
 const loadInitialTransactions = () => {
   const stored = getStoredTransactions();
   if (stored && stored.length > 0) return stored;
-  const mock = generateMockTransactions();
+  const mock = getMockTransactions();
   saveTransactions(mock);
   return mock;
 };
+
+// ======== Simulated API helpers ========
+
+/**
+ * Simulate an API delay (placeholder for real API integration).
+ * Replace the body of these functions with actual fetch/axios calls
+ * when connecting to a real backend.
+ */
+const simulateApiDelay = (ms = 600) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+// ======== Async Thunks ========
+
+/**
+ * POST /api/transactions — Add a new transaction
+ */
+export const addTransactionAsync = createAsyncThunk(
+  'transactions/addTransaction',
+  async (txData, { getState, rejectWithValue }) => {
+    try {
+      // — Simulate network request —
+      await simulateApiDelay();
+
+      // Build the new transaction object (server would normally do this)
+      const newTx = {
+        ...txData,
+        id: generateId(),
+      };
+
+      // TODO: Replace with real API call, e.g.:
+      // const response = await fetch('/api/transactions', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(txData),
+      // });
+      // if (!response.ok) throw new Error('Failed to add transaction');
+      // const newTx = await response.json();
+
+      return newTx;
+    } catch (err) {
+      return rejectWithValue(err.message || 'Failed to add transaction');
+    }
+  }
+);
+
+/**
+ * PUT /api/transactions/:id — Update an existing transaction
+ */
+export const updateTransactionAsync = createAsyncThunk(
+  'transactions/updateTransaction',
+  async (txData, { getState, rejectWithValue }) => {
+    try {
+      // — Simulate network request —
+      await simulateApiDelay();
+
+      // TODO: Replace with real API call, e.g.:
+      // const response = await fetch(`/api/transactions/${txData.id}`, {
+      //   method: 'PUT',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(txData),
+      // });
+      // if (!response.ok) throw new Error('Failed to update transaction');
+      // return await response.json();
+
+      return txData;
+    } catch (err) {
+      return rejectWithValue(err.message || 'Failed to update transaction');
+    }
+  }
+);
+
+/**
+ * DELETE /api/transactions/:id — Delete a transaction
+ */
+export const deleteTransactionAsync = createAsyncThunk(
+  'transactions/deleteTransaction',
+  async (txId, { rejectWithValue }) => {
+    try {
+      // — Simulate network request —
+      await simulateApiDelay(400);
+
+      // TODO: Replace with real API call, e.g.:
+      // const response = await fetch(`/api/transactions/${txId}`, {
+      //   method: 'DELETE',
+      // });
+      // if (!response.ok) throw new Error('Failed to delete transaction');
+
+      return txId;
+    } catch (err) {
+      return rejectWithValue(err.message || 'Failed to delete transaction');
+    }
+  }
+);
 
 const initialState = {
   items: loadInitialTransactions(),
@@ -24,34 +117,16 @@ const initialState = {
   },
   currentPage: 1,
   itemsPerPage: 10,
+  // Async operation state
+  loading: false,       // true while any async thunk is pending
+  operationType: null,  // 'add' | 'update' | 'delete' | null
+  error: null,          // string error message or null
 };
 
 const transactionSlice = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
-    addTransaction: (state, action) => {
-      const newTx = {
-        ...action.payload,
-        id: generateId(),
-      };
-      state.items.unshift(newTx);
-      saveTransactions(state.items);
-    },
-
-    updateTransaction: (state, action) => {
-      const index = state.items.findIndex(t => t.id === action.payload.id);
-      if (index !== -1) {
-        state.items[index] = { ...state.items[index], ...action.payload };
-        saveTransactions(state.items);
-      }
-    },
-
-    deleteTransaction: (state, action) => {
-      state.items = state.items.filter(t => t.id !== action.payload);
-      saveTransactions(state.items);
-    },
-
     setFilter: (state, action) => {
       const { key, value } = action.payload;
       state.filters[key] = value;
@@ -67,13 +142,71 @@ const transactionSlice = createSlice({
       state.currentPage = action.payload;
     },
 
-    resetData: (state) => {
-      const mock = generateMockTransactions();
-      state.items = mock;
-      saveTransactions(mock);
-      state.filters = { ...initialState.filters };
-      state.currentPage = 1;
+    clearError: (state) => {
+      state.error = null;
     },
+  },
+
+  extraReducers: (builder) => {
+    // ── Add Transaction ──
+    builder
+      .addCase(addTransactionAsync.pending, (state) => {
+        state.loading = true;
+        state.operationType = 'add';
+        state.error = null;
+      })
+      .addCase(addTransactionAsync.fulfilled, (state, action) => {
+        state.items.unshift(action.payload);
+        saveTransactions(state.items);
+        state.loading = false;
+        state.operationType = null;
+      })
+      .addCase(addTransactionAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.operationType = null;
+        state.error = action.payload || 'Failed to add transaction';
+      });
+
+    // ── Update Transaction ──
+    builder
+      .addCase(updateTransactionAsync.pending, (state) => {
+        state.loading = true;
+        state.operationType = 'update';
+        state.error = null;
+      })
+      .addCase(updateTransactionAsync.fulfilled, (state, action) => {
+        const index = state.items.findIndex(t => t.id === action.payload.id);
+        if (index !== -1) {
+          state.items[index] = { ...state.items[index], ...action.payload };
+        }
+        saveTransactions(state.items);
+        state.loading = false;
+        state.operationType = null;
+      })
+      .addCase(updateTransactionAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.operationType = null;
+        state.error = action.payload || 'Failed to update transaction';
+      });
+
+    // ── Delete Transaction ──
+    builder
+      .addCase(deleteTransactionAsync.pending, (state) => {
+        state.loading = true;
+        state.operationType = 'delete';
+        state.error = null;
+      })
+      .addCase(deleteTransactionAsync.fulfilled, (state, action) => {
+        state.items = state.items.filter(t => t.id !== action.payload);
+        saveTransactions(state.items);
+        state.loading = false;
+        state.operationType = null;
+      })
+      .addCase(deleteTransactionAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.operationType = null;
+        state.error = action.payload || 'Failed to delete transaction';
+      });
   },
 });
 
@@ -329,14 +462,16 @@ export const selectInsights = (state) => {
   };
 };
 
+// Loading state selectors
+export const selectTransactionLoading = (state) => state.transactions.loading;
+export const selectTransactionError = (state) => state.transactions.error;
+export const selectOperationType = (state) => state.transactions.operationType;
+
 export const {
-  addTransaction,
-  updateTransaction,
-  deleteTransaction,
   setFilter,
   clearFilters,
   setPage,
-  resetData,
+  clearError,
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

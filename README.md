@@ -1,13 +1,14 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # 💰 FinTrack — Finance Dashboard
 
 **A premium, interactive finance dashboard for tracking income, expenses, and spending insights.**
 
-Built with **React 19 · Vite · Redux Toolkit · Recharts**
+Built with **React 19 · Vite 8 · Redux Toolkit · Tailwind CSS v4 · Recharts**
 
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4.0-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Redux](https://img.shields.io/badge/Redux_Toolkit-2.11-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 
@@ -25,8 +26,8 @@ Built with **React 19 · Vite · Redux Toolkit · Recharts**
 
 ```bash
 # 1 — Clone the repository
-git clone https://github.com/your-username/fintrack.git
-cd fintrack
+git clone https://github.com/Mohi-th/Finance_tracker.git
+cd Finance_tracker
 
 # 2 — Install dependencies
 npm install
@@ -52,19 +53,21 @@ Open **http://localhost:5173/** in your browser — you're good to go!
 
 ### 📊 Dashboard Overview
 
-- **Summary Cards** — Total Balance, Income, Expenses & Transaction count with smooth animated counters and trend indicators
+- **Summary Cards** — Total Balance, Income, Expenses & Transaction count with smooth animated counters and trend indicators (₹ INR currency)
 - **Balance Trend Chart** — Area chart showing cumulative balance & income over the last 6 months
 - **Spending Breakdown** — Interactive donut chart with a category legend
-- **Recent Transactions** — Quick-view list of the most recent 5 transactions
+- **Recent Transactions** — Quick-view list with **color-coded category labels** and Lucide icons
 
 ### 💳 Transaction Management
 
-- Full **CRUD operations** — Add, Edit, Delete (admin-only)
-- **Multi-criteria filtering** — by type, category, date range, and text search
-- **Sorting** — by date or amount (ascending / descending)
+- Full **CRUD operations** via `createAsyncThunk` — Add, Edit, Delete (admin-only)
+- **Debounced search** — 350ms delay to reduce unnecessary Redux dispatches while typing
+- **Collapsible filter panel** — toggle with a Filters button to reveal Type, Category, Date Range
+- **Sorting** — via dropdown menu (date or amount, ascending/descending)
 - **Pagination** — with intuitive page controls
 - **CSV Export** — download all filtered transactions as `.csv`
 - **Responsive views** — table layout on desktop, card layout on mobile
+- **Category Icons** — each category (Food, Shopping, Travel, etc.) has its own Lucide icon with unique color
 
 ### 📈 Insights & Analytics
 
@@ -82,12 +85,13 @@ Open **http://localhost:5173/** in your browser — you're good to go!
 | **Admin** | Full CRUD access to all transactions     |
 | **Viewer**| Read-only — add/edit/delete are hidden   |
 
-Toggle between roles via the sidebar switch. A role badge is displayed in the header.
+Toggle between roles via the **header segmented control**. The current role is displayed as a color-coded badge in the sidebar.
 
 ### 🌗 Theming
 
 - **Dark Mode** — "Midnight Analytics" theme (default)
 - **Light Mode** — clean, bright alternative
+- Theme toggle with **tilt animation** in the header
 - Theme preference is **persisted in localStorage**
 
 ---
@@ -95,7 +99,7 @@ Toggle between roles via the sidebar switch. A role badge is displayed in the he
 ## 🏗️ Project Architecture
 
 ```
-fintrack/
+finance-dashboard/
 ├── public/                     # Static assets
 ├── src/
 │   ├── components/
@@ -108,6 +112,7 @@ fintrack/
 │   │   │   ├── Badge.jsx
 │   │   │   ├── Button.jsx
 │   │   │   ├── Card.jsx
+│   │   │   ├── CategoryIcon.jsx    # ← NEW: Lucide icons per category
 │   │   │   ├── EmptyState.jsx
 │   │   │   ├── Modal.jsx
 │   │   │   └── Toast.jsx
@@ -118,14 +123,14 @@ fintrack/
 │   │   │   └── InsightCards.jsx
 │   │   ├── layout/             # App shell — Sidebar, Header
 │   │   │   ├── AppLayout.jsx
-│   │   │   ├── Header.jsx
-│   │   │   └── Sidebar.jsx
+│   │   │   ├── Header.jsx      # Role toggle + theme switch
+│   │   │   └── Sidebar.jsx     # Nav + role badge indicator
 │   │   └── transactions/       # Transaction CRUD UI
-│   │       ├── TransactionFilters.jsx
+│   │       ├── TransactionFilters.jsx  # Collapsible filters + debounced search
 │   │       ├── TransactionForm.jsx
 │   │       └── TransactionList.jsx
 │   ├── data/
-│   │   └── mockData.js         # Realistic mock data generator
+│   │   └── mockData.js         # Hardcoded realistic transaction data
 │   ├── pages/
 │   │   ├── DashboardPage.jsx
 │   │   ├── TransactionsPage.jsx
@@ -133,15 +138,15 @@ fintrack/
 │   ├── store/
 │   │   ├── index.js            # Redux store configuration
 │   │   └── slices/
-│   │       ├── transactionSlice.js   # Transactions, filters, pagination
+│   │       ├── transactionSlice.js   # Async thunks + filters + selectors
 │   │       └── uiSlice.js            # Theme, role, sidebar, modal, toast
 │   ├── utils/
 │   │   ├── constants.js        # App-wide constants & category maps
-│   │   ├── formatters.js       # Currency, date, ID formatters
-│   │   └── storage.js          # localStorage helpers
+│   │   ├── formatters.js       # Currency (₹ INR), date, ID formatters
+│   │   ├── storage.js          # localStorage helpers
+│   │   └── useDebounce.js      # ← NEW: Custom debounce hooks
 │   ├── App.jsx                 # Root component with routing
-│   ├── App.css
-│   ├── index.css               # Global styles & design tokens
+│   ├── index.css               # Tailwind CSS + @theme design tokens
 │   └── main.jsx                # App entry point
 ├── index.html
 ├── vite.config.js
@@ -151,19 +156,112 @@ fintrack/
 
 ---
 
+## 🧩 State Management (Redux Toolkit)
+
+The Redux store is organized into two slices with a focus on **async-ready architecture** and **performance optimization**.
+
+### `transactionSlice` — Async Thunks & Selectors
+
+All CRUD operations use **`createAsyncThunk`** to simulate API interactions, making the codebase ready for backend integration:
+
+```js
+// Async thunks with simulated API delays
+addTransactionAsync     // POST   /api/transactions     (600ms delay)
+updateTransactionAsync  // PUT    /api/transactions/:id (600ms delay)
+deleteTransactionAsync  // DELETE /api/transactions/:id (400ms delay)
+```
+
+Each thunk manages its lifecycle through `extraReducers`:
+
+| State       | What it does                                         |
+| ----------- | ---------------------------------------------------- |
+| `pending`   | Sets `loading: true`, tracks `operationType`         |
+| `fulfilled` | Updates the transactions array, clears loading       |
+| `rejected`  | Sets `error` message, clears loading                 |
+
+**Memoized Selectors** — computed data is cached to avoid recalculation:
+
+```js
+selectFilteredTransactions  // Search + type + category + date range filtering
+selectPaginatedTransactions // Paginated subset of filtered results
+selectSummary               // Totals, balances, savings rate
+selectInsights              // Top category, trends, average daily spend
+selectMonthlyData           // Aggregated monthly income/expense/balance
+selectCategoryBreakdown     // Spending by category with percentages
+selectRecentTransactions    // Latest 5 transactions
+```
+
+### `uiSlice` — UI State
+
+| State Key          | Purpose                              |
+| ------------------ | ------------------------------------ |
+| `theme`            | `'dark'` / `'light'` — persisted     |
+| `role`             | `'admin'` / `'viewer'` — RBAC       |
+| `sidebarOpen`      | Desktop sidebar collapse state       |
+| `mobileSidebarOpen`| Mobile sidebar drawer visibility     |
+| `modalOpen`        | Active modal type or `null`          |
+| `toasts[]`         | Toast notification queue             |
+
+---
+
+## ⚡ Debounced Search
+
+The transaction search input uses a **custom debounce hook** to optimize performance:
+
+```
+src/utils/useDebounce.js
+├── useDebounceValue(value, delay)      — Returns a debounced value
+└── useDebouncedCallback(fn, delay)     — Returns a debounced function
+```
+
+### How it works:
+
+1. **User types** in the search box → local React state updates **immediately** (no input lag)
+2. **Redux dispatch is delayed** by 350ms after the last keystroke
+3. If the user keeps typing, the timer resets — only the final value is dispatched
+4. This prevents **unnecessary re-filtering** of 200+ transactions on every keypress
+
+```
+Keystroke timeline:
+  "s" → "sa" → "sal" → "sala" → "salary"
+                                    ↓
+                            350ms debounce
+                                    ↓
+                        dispatch(setFilter({ search: "salary" }))
+```
+
+---
+
 ## 🎨 Design System
 
-The UI is powered by **CSS Custom Properties** for seamless theming.
+The UI is powered by **Tailwind CSS v4** with custom design tokens defined via the `@theme` directive in `index.css`.
 
-| Token        | Dark Mode Value                  | Purpose                  |
-| ------------ | -------------------------------- | ------------------------ |
-| `--bg`       | `#0F1629` (Deep Navy)            | Page background          |
-| `--surface`  | `#1A2332`                        | Card / panel backgrounds |
-| `--primary`  | `#3B82F6` (Electric Blue)        | Buttons, links, accents  |
-| `--income`   | `#10B981` (Emerald)              | Income indicators        |
-| `--expense`  | `#F43F5E` (Rose)                 | Expense indicators       |
-| Font         | [Inter](https://fonts.google.com/specimen/Inter) | Typography               |
-| Border Radius| `6px – 16px` system              | Consistent rounding      |
+| Token          | Dark Mode Value                  | Purpose                  |
+| -------------- | -------------------------------- | ------------------------ |
+| `bg-primary`   | `#0F1629` (Deep Navy)            | Page background          |
+| `bg-secondary` | `#1A2332`                        | Card / panel backgrounds |
+| `primary`      | `#3B82F6` (Electric Blue)        | Buttons, links, accents  |
+| `income`       | `#10B981` (Emerald)              | Income indicators        |
+| `expense`      | `#F43F5E` (Rose)                 | Expense indicators       |
+| Font           | [Inter](https://fonts.google.com/specimen/Inter) | Typography               |
+| Border Radius  | `6px – 16px` system              | Consistent rounding      |
+
+### Category Color System
+
+Each transaction category has a unique icon and color for instant visual recognition:
+
+| Category        | Icon            | Color     |
+| --------------- | --------------- | --------- |
+| Food & Dining   | UtensilsCrossed | `#F97316` |
+| Shopping        | ShoppingBag     | `#A855F7` |
+| Transport       | Car             | `#06B6D4` |
+| Entertainment   | Gamepad2        | `#F43F5E` |
+| Bills & Utilities| Zap            | `#F59E0B` |
+| Salary          | Briefcase       | `#3B82F6` |
+| Freelance       | Laptop          | `#8B5CF6` |
+| Travel          | Plane           | `#0EA5E9` |
+| Education       | GraduationCap   | `#3B82F6` |
+| Groceries       | ShoppingCart     | `#84CC16` |
 
 ---
 
@@ -173,12 +271,12 @@ The UI is powered by **CSS Custom Properties** for seamless theming.
 | -------------------- | -------------------------------- |
 | **React 19**         | UI framework (functional components + hooks) |
 | **Vite 8**           | Lightning-fast dev server & bundler |
-| **Redux Toolkit**    | Centralized state management     |
+| **Tailwind CSS v4**  | Utility-first styling with `@theme` tokens |
+| **Redux Toolkit**    | Centralized state with `createAsyncThunk` |
 | **React Router v7**  | Client-side routing              |
 | **Recharts**         | Charts & data visualizations     |
-| **Lucide React**     | Beautiful icon system            |
+| **Lucide React**     | Category icons & UI iconography  |
 | **Lottie (dotlottie)**| Loading & empty state animations |
-| **CSS Custom Props** | Design tokens & light/dark theming |
 
 ---
 
@@ -194,33 +292,25 @@ The UI is powered by **CSS Custom Properties** for seamless theming.
 
 ## 📊 Mock Data
 
-On first load, the app auto-generates **~150–200 realistic transactions** spanning the last 6 months:
+The app ships with **hardcoded realistic transactions** spanning the last 6 months:
 
-- 💼 Bi-monthly salary deposits ($3,800–$4,200)
+- 💼 Bi-monthly salary deposits (₹3,800–₹4,200)
 - 💻 Random freelance & investment income
 - 🍕 Daily expenses across **10+ categories** (food, transport, shopping, bills, etc.)
 - ✈️ Occasional large travel expenses
 - 📈 Seasonal spending variations for realistic trends
 
-All data is **persisted in localStorage**. Hit the **"Reset Data"** button in the sidebar to regenerate fresh data anytime.
+All data is **persisted in localStorage**.
 
 ---
 
-## 🧩 State Management
+## 🔮 Future Enhancements
 
-The Redux store is organized into two slices:
-
-### `transactionSlice`
-- Manages the full transactions array
-- Handles add / edit / delete reducers
-- Provides filtered & paginated selectors
-- Computes derived stats (totals, category breakdowns, monthly aggregates)
-
-### `uiSlice`
-- Controls theme (dark / light)
-- Manages user role (admin / viewer)
-- Handles sidebar open/close state
-- Controls modal visibility & toast notifications
+- **Backend Integration** — Replace `simulateApiDelay` in async thunks with real `fetch`/`axios` API calls
+- **Authentication** — JWT-based login/signup with role assignment
+- **Budget Goals** — Set monthly spending limits per category
+- **Recurring Transactions** — Auto-generate subscriptions and salary entries
+- **Data Export** — PDF report generation with charts
 
 ---
 
@@ -244,9 +334,8 @@ This project is licensed under the **MIT License** — free to use, modify, and 
 
 <div align="center">
 
-**Built with ❤️ using React + Vite**
+**Built with ❤️ using React + Vite + Tailwind CSS**
 
 ⭐ Star this repo if you found it useful!
 
 </div>
-]]>

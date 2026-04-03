@@ -3,7 +3,6 @@ import SummaryCards from '../components/dashboard/SummaryCards';
 import BalanceTrendChart from '../components/charts/BalanceTrendChart';
 import SpendingBreakdownChart from '../components/charts/SpendingBreakdownChart';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
-import './Pages.css';
 
 export default function DashboardPage() {
   const now = new Date();
@@ -15,15 +14,15 @@ export default function DashboardPage() {
         title={`${greeting} 👋`}
         subtitle={now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
       />
-      <div className="page">
+      <div className="p-6 flex flex-col gap-6 max-w-[1400px] mx-auto w-full max-lg:p-4 max-sm:p-3 max-sm:gap-4">
         <SummaryCards />
 
-        <div className="page__grid-2">
+        <div className="grid grid-cols-[1.2fr_1fr] gap-5 max-lg:grid-cols-1">
           <BalanceTrendChart />
           <SpendingBreakdownChart />
         </div>
 
-        <div className="page__grid-1">
+        <div className="grid grid-cols-1 gap-5">
           <RecentTransactions />
         </div>
       </div>

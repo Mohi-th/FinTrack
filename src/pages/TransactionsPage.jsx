@@ -9,7 +9,6 @@ import Modal from '../components/common/Modal';
 import TransactionFilters from '../components/transactions/TransactionFilters';
 import TransactionList from '../components/transactions/TransactionList';
 import TransactionForm from '../components/transactions/TransactionForm';
-import './Pages.css';
 
 export default function TransactionsPage() {
   const dispatch = useDispatch();
@@ -41,10 +40,10 @@ export default function TransactionsPage() {
   return (
     <>
       <Header title="Transactions" subtitle={`${allFilteredTx.length} transactions found`} />
-      <div className="page">
-        <div className="page__toolbar">
+      <div className="p-6 flex flex-col gap-6 max-w-[1400px] mx-auto w-full max-lg:p-4 max-sm:p-3 max-sm:gap-4">
+        <div className="flex flex-col gap-4">
           <TransactionFilters />
-          <div className="page__toolbar-actions">
+          <div className="flex items-center gap-3 justify-end max-sm:flex-wrap">
             <Button variant="secondary" size="sm" icon={Download} onClick={handleExportCSV}>
               Export CSV
             </Button>

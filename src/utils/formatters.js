@@ -1,22 +1,22 @@
 /**
- * Format a number as currency (USD)
+ * Format a number as currency (INR)
  */
 export const formatCurrency = (amount, compact = false) => {
-  if (amount === null || amount === undefined) return '$0.00';
+  if (amount === null || amount === undefined) return '₹0.00';
   
   if (compact && Math.abs(amount) >= 1000) {
-    const formatter = new Intl.NumberFormat('en-US', {
+    const formatter = new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       notation: 'compact',
       maximumFractionDigits: 1,
     });
     return formatter.format(amount);
   }
 
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);

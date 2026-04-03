@@ -33,30 +33,29 @@ export const getStoredTheme = () => {
   return localStorage.getItem(THEME_KEY) || 'dark';
 };
 
-/**
- * Save theme preference
- */
+
+// Save theme preference
+
 export const saveTheme = (theme) => {
   localStorage.setItem(THEME_KEY, theme);
 };
 
-/**
- * Get stored role
- */
+
+ //Get stored role
+
 export const getStoredRole = () => {
   return localStorage.getItem(ROLE_KEY) || 'admin';
 };
 
-/**
- * Save role
- */
+// Save role
+
 export const saveRole = (role) => {
   localStorage.setItem(ROLE_KEY, role);
 };
 
-/**
- * Clear all stored data
- */
+
+//Clear all stored data
+
 export const clearStorage = () => {
   localStorage.removeItem(STORAGE_KEY);
 };

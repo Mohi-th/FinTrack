@@ -1,24 +1,44 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPaginatedTransactions, deleteTransaction, setPage } from '../../store/slices/transactionSlice';
+import {
+  selectPaginatedTransactions,
+  deleteTransactionAsync,
+  setPage,
+  selectTransactionLoading,
+  selectOperationType,
+} from '../../store/slices/transactionSlice';
 import { openModal, addToast } from '../../store/slices/uiSlice';
 import { getCategoryLabel } from '../../utils/constants';
 import { formatCurrency, formatDate } from '../../utils/formatters';
-import { ArrowUpRight, ArrowDownRight, Edit2, Trash2, ChevronLeft, ChevronRight, Inbox } from 'lucide-react';
+import {
+  ArrowUpRight,
+  ArrowDownRight,
+  Edit2,
+  Trash2,
+  ChevronLeft,
+  ChevronRight,
+  Inbox,
+  Loader2,
+} from 'lucide-react';
 import Badge from '../common/Badge';
-import Button from '../common/Button';
 import EmptyState from '../common/EmptyState';
-import './TransactionList.css';
+import CategoryIcon, { getCategoryColor } from '../common/CategoryIcon';
 
 export default function TransactionList() {
   const dispatch = useDispatch();
   const { data: transactions, total, totalPages, currentPage } = useSelector(selectPaginatedTransactions);
   const role = useSelector(s => s.ui.role);
   const isAdmin = role === 'admin';
+  const loading = useSelector(selectTransactionLoading);
+  const operationType = useSelector(selectOperationType);
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this transaction?')) {
-      dispatch(deleteTransaction(id));
-      dispatch(addToast({ message: 'Transaction deleted', type: 'success' }));
+      try {
+        await dispatch(deleteTransactionAsync(id)).unwrap();
+        dispatch(addToast({ message: 'Transaction deleted', type: 'success' }));
+      } catch (err) {
+        dispatch(addToast({ message: err || 'Failed to delete', type: 'error' }));
+      }
     }
   };
 
@@ -37,50 +57,63 @@ export default function TransactionList() {
   }
 
   return (
-    <div className="tx-list">
+    <div className="animate-fade-in relative">
+      {/* Loading overlay for delete operations */}
+      {loading && operationType === 'delete' && (
+        <div className="absolute inset-0 bg-bg-secondary/60 backdrop-blur-[2px] z-10 flex items-center justify-center rounded-md">
+          <div className="flex items-center gap-2 text-text-muted text-sm">
+            <Loader2 size={18} className="animate-spin" />
+            <span>Deleting...</span>
+          </div>
+        </div>
+      )}
+
       {/* Desktop table */}
-      <div className="tx-table-wrapper">
-        <table className="tx-table">
+      <div className="overflow-x-auto max-md:hidden">
+        <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th>Transaction</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Type</th>
-              {isAdmin && <th>Actions</th>}
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Transaction</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Category</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Date</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Amount</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Type</th>
+              {isAdmin && <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Actions</th>}
             </tr>
           </thead>
           <tbody>
             {transactions.map((tx, i) => (
-              <tr key={tx.id} className="tx-table__row" style={{ animationDelay: `${i * 30}ms` }}>
-                <td>
-                  <div className="tx-table__txn">
-                    <div className={`tx-table__icon ${tx.type === 'income' ? 'tx-table__icon--income' : 'tx-table__icon--expense'}`}>
-                      {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                    </div>
-                    <span className="tx-table__desc">{tx.description}</span>
+              <tr key={tx.id} className="animate-fade-in-up hover:bg-bg-elevated" style={{ animationDelay: `${i * 30}ms`, opacity: 0 }}>
+                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle last:border-b-0">
+                  <div className="flex items-center gap-3">
+                    <CategoryIcon category={tx.category} size={16} />
+                    <span className="font-semibold text-text-primary whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">{tx.description}</span>
                   </div>
                 </td>
-                <td>
-                  <Badge variant="default">{getCategoryLabel(tx.category)}</Badge>
+                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
+                  <span
+                    className="font-semibold text-[0.8125rem]"
+                    style={{ color: getCategoryColor(tx.category) }}
+                  >
+                    {getCategoryLabel(tx.category)}
+                  </span>
                 </td>
-                <td className="tx-table__date">{formatDate(tx.date)}</td>
-                <td>
-                  <span className={tx.type === 'income' ? 'text-income' : 'text-expense'} style={{ fontWeight: 700 }}>
+                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle text-text-secondary whitespace-nowrap">{formatDate(tx.date)}</td>
+                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
+                  <span className={`font-bold ${tx.type === 'income' ? 'text-income' : 'text-expense'}`}>
                     {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
                   </span>
                 </td>
-                <td>
+                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
                   <Badge variant={tx.type}>{tx.type}</Badge>
                 </td>
                 {isAdmin && (
-                  <td>
-                    <div className="tx-table__actions">
-                      <button className="tx-table__action-btn" onClick={() => handleEdit(tx)} title="Edit">
+                  <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
+                    <div className="flex items-center gap-1">
+                      <button className="p-2 rounded-[6px] text-text-muted transition-all duration-150 hover:text-primary hover:bg-primary-light" onClick={() => handleEdit(tx)} title="Edit">
                         <Edit2 size={15} />
                       </button>
-                      <button className="tx-table__action-btn tx-table__action-btn--danger" onClick={() => handleDelete(tx.id)} title="Delete">
+                      <button className="p-2 rounded-[6px] text-text-muted transition-all duration-150 hover:text-expense hover:bg-expense-light" onClick={() => handleDelete(tx.id)} title="Delete">
                         <Trash2 size={15} />
                       </button>
                     </div>
@@ -93,27 +126,28 @@ export default function TransactionList() {
       </div>
 
       {/* Mobile card list */}
-      <div className="tx-mobile-list">
+      <div className="hidden max-md:flex flex-col gap-2">
         {transactions.map((tx, i) => (
-          <div key={tx.id} className="tx-mobile-card" style={{ animationDelay: `${i * 30}ms` }}>
-            <div className="tx-mobile-card__top">
-              <div className={`tx-table__icon ${tx.type === 'income' ? 'tx-table__icon--income' : 'tx-table__icon--expense'}`}>
-                {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
+          <div key={tx.id} className="px-4 py-3 border-b border-border animate-fade-in-up" style={{ animationDelay: `${i * 30}ms`, opacity: 0 }}>
+            <div className="flex items-center gap-3">
+              <CategoryIcon category={tx.category} size={16} />
+              <div className="flex-1 flex flex-col min-w-0">
+                <span className="text-[0.8125rem] font-semibold text-text-primary whitespace-nowrap overflow-hidden text-ellipsis">{tx.description}</span>
+                <span className="text-xs">
+                  <span style={{ color: getCategoryColor(tx.category) }} className="font-medium">{getCategoryLabel(tx.category)}</span>
+                  <span className="text-text-muted"> · {formatDate(tx.date, 'dayMonth')}</span>
+                </span>
               </div>
-              <div className="tx-mobile-card__info">
-                <span className="tx-mobile-card__desc">{tx.description}</span>
-                <span className="tx-mobile-card__meta">{getCategoryLabel(tx.category)} · {formatDate(tx.date, 'dayMonth')}</span>
-              </div>
-              <div className="tx-mobile-card__amount-group">
-                <span className={`tx-mobile-card__amount ${tx.type === 'income' ? 'text-income' : 'text-expense'}`}>
+              <div className="flex flex-col items-end gap-1">
+                <span className={`text-[0.8125rem] font-bold whitespace-nowrap ${tx.type === 'income' ? 'text-income' : 'text-expense'}`}>
                   {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
                 </span>
                 {isAdmin && (
-                  <div className="tx-table__actions">
-                    <button className="tx-table__action-btn" onClick={() => handleEdit(tx)} title="Edit">
+                  <div className="flex items-center gap-1">
+                    <button className="p-2 rounded-[6px] text-text-muted transition-all duration-150 hover:text-primary hover:bg-primary-light" onClick={() => handleEdit(tx)} title="Edit">
                       <Edit2 size={14} />
                     </button>
-                    <button className="tx-table__action-btn tx-table__action-btn--danger" onClick={() => handleDelete(tx.id)} title="Delete">
+                    <button className="p-2 rounded-[6px] text-text-muted transition-all duration-150 hover:text-expense hover:bg-expense-light" onClick={() => handleDelete(tx.id)} title="Delete">
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -126,13 +160,13 @@ export default function TransactionList() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="tx-pagination">
-          <span className="tx-pagination__info">
+        <div className="flex items-center justify-between p-4 border-t border-border max-md:flex-col max-md:gap-3">
+          <span className="text-xs text-text-muted">
             Showing {(currentPage - 1) * 10 + 1}–{Math.min(currentPage * 10, total)} of {total}
           </span>
-          <div className="tx-pagination__controls">
+          <div className="flex items-center gap-1">
             <button
-              className="tx-pagination__btn"
+              className="w-8 h-8 flex items-center justify-center rounded-[6px] text-xs font-semibold text-text-secondary transition-all duration-150 hover:bg-bg-elevated hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed"
               disabled={currentPage === 1}
               onClick={() => dispatch(setPage(currentPage - 1))}
             >
@@ -152,7 +186,11 @@ export default function TransactionList() {
               return (
                 <button
                   key={page}
-                  className={`tx-pagination__btn ${currentPage === page ? 'tx-pagination__btn--active' : ''}`}
+                  className={`w-8 h-8 flex items-center justify-center rounded-[6px] text-xs font-semibold transition-all duration-150 ${
+                    currentPage === page
+                      ? 'bg-primary text-white'
+                      : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary'
+                  }`}
                   onClick={() => dispatch(setPage(page))}
                 >
                   {page}
@@ -160,7 +198,7 @@ export default function TransactionList() {
               );
             })}
             <button
-              className="tx-pagination__btn"
+              className="w-8 h-8 flex items-center justify-center rounded-[6px] text-xs font-semibold text-text-secondary transition-all duration-150 hover:bg-bg-elevated hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed"
               disabled={currentPage === totalPages}
               onClick={() => dispatch(setPage(currentPage + 1))}
             >

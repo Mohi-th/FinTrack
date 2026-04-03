@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
-import './Modal.css';
 
 export default function Modal({
   isOpen,
@@ -37,18 +36,34 @@ export default function Modal({
     if (e.target === e.currentTarget) onClose();
   };
 
+  const sizeClasses = {
+    sm: 'max-w-[400px]',
+    md: 'max-w-[520px]',
+    lg: 'max-w-[700px]',
+  };
+
   return (
-    <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className={`modal modal--${size}`} ref={modalRef}>
-        <div className="modal__header">
-          <h2 className="modal__title">{title}</h2>
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-[4px] flex items-center justify-center z-[200] p-4 animate-fade-in max-sm:items-end max-sm:p-3"
+      onClick={handleOverlayClick}
+    >
+      <div
+        className={`bg-bg-secondary border border-border rounded-xl w-full max-h-[90vh] flex flex-col shadow-lg animate-scale-in max-sm:rounded-b-none max-sm:max-h-[85vh] ${sizeClasses[size]}`}
+        ref={modalRef}
+      >
+        <div className="flex items-center justify-between px-6 py-5 border-b border-border shrink-0">
+          <h2 className="text-lg font-bold text-text-primary">{title}</h2>
           {showClose && (
-            <button className="modal__close" onClick={onClose} aria-label="Close modal">
+            <button
+              className="text-text-secondary p-2 rounded-[6px] transition-all duration-150 hover:text-text-primary hover:bg-bg-elevated"
+              onClick={onClose}
+              aria-label="Close modal"
+            >
               <X size={20} />
             </button>
           )}
         </div>
-        <div className="modal__body">
+        <div className="p-6 overflow-y-auto">
           {children}
         </div>
       </div>

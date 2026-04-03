@@ -3,35 +3,38 @@ import { selectSummary, selectInsights } from '../../store/slices/transactionSli
 import { Wallet, TrendingUp, TrendingDown, ArrowLeftRight } from 'lucide-react';
 import AnimatedNumber from '../common/AnimatedNumber';
 import Card from '../common/Card';
-import './SummaryCards.css';
 
 const cards = [
   {
     key: 'totalBalance',
     label: 'Total Balance',
     icon: Wallet,
-    colorClass: 'summary-card--primary',
-    prefix: '$',
+    gradient: 'from-[#3B82F6] to-[#8B5CF6]',
+    iconBg: 'bg-primary-light text-primary',
+    prefix: '₹',
   },
   {
     key: 'totalIncome',
     label: 'Total Income',
     icon: TrendingUp,
-    colorClass: 'summary-card--income',
-    prefix: '$',
+    gradient: 'from-[#10B981] to-[#34D399]',
+    iconBg: 'bg-income-light text-income',
+    prefix: '₹',
   },
   {
     key: 'totalExpenses',
     label: 'Total Expenses',
     icon: TrendingDown,
-    colorClass: 'summary-card--expense',
-    prefix: '$',
+    gradient: 'from-[#F43F5E] to-[#FB7185]',
+    iconBg: 'bg-expense-light text-expense',
+    prefix: '₹',
   },
   {
     key: 'transactionCount',
     label: 'Transactions',
     icon: ArrowLeftRight,
-    colorClass: 'summary-card--info',
+    gradient: 'from-[#06B6D4] to-[#22D3EE]',
+    iconBg: 'bg-info-light text-info',
     prefix: '',
     decimals: 0,
   },
@@ -48,21 +51,23 @@ export default function SummaryCards() {
   };
 
   return (
-    <div className="summary-cards stagger-children">
+    <div className="grid grid-cols-4 gap-5 max-lg:grid-cols-2 max-[480px]:grid-cols-1 stagger-children">
       {cards.map(card => {
         const Icon = card.icon;
         const value = summary[card.key] || 0;
         const trend = getTrend(card.key);
 
         return (
-          <Card key={card.key} className={`summary-card ${card.colorClass}`} hover padding="md">
-            <div className="summary-card__header">
-              <span className="summary-card__label">{card.label}</span>
-              <div className="summary-card__icon">
+          <Card key={card.key} className="relative overflow-hidden" hover padding="md">
+            {/* Top gradient bar */}
+            <div className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${card.gradient} rounded-t-lg`} />
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[0.8125rem] font-medium text-text-secondary">{card.label}</span>
+              <div className={`w-9 h-9 rounded-md flex items-center justify-center ${card.iconBg}`}>
                 <Icon size={20} />
               </div>
             </div>
-            <div className="summary-card__value">
+            <div className="text-2xl font-extrabold text-text-primary mb-2 tracking-tight max-[480px]:text-xl">
               <AnimatedNumber
                 value={value}
                 prefix={card.prefix}
@@ -71,7 +76,7 @@ export default function SummaryCards() {
               />
             </div>
             {trend !== null && (
-              <div className={`summary-card__trend ${trend >= 0 ? 'summary-card__trend--up' : 'summary-card__trend--down'}`}>
+              <div className={`flex items-center gap-1 text-xs font-medium ${trend >= 0 ? 'text-income' : 'text-expense'}`}>
                 {trend >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                 <span>{Math.abs(trend).toFixed(1)}% vs last month</span>
               </div>

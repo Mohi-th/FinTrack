@@ -6,7 +6,6 @@ import DashboardPage from './pages/DashboardPage';
 import TransactionsPage from './pages/TransactionsPage';
 import InsightsPage from './pages/InsightsPage';
 import Toast from './components/common/Toast';
-import './App.css';
 
 function App() {
   const theme = useSelector(state => state.ui.theme);
@@ -16,7 +15,7 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="app">
+    <div className="min-h-screen relative">
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<DashboardPage />} />

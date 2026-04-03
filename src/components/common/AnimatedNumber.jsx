@@ -38,7 +38,7 @@ export default function AnimatedNumber({ value, duration = 1000, prefix = '', su
     };
   }, [value, duration]);
 
-  const formatted = display.toLocaleString('en-US', {
+  const formatted = display.toLocaleString('en-IN', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });
