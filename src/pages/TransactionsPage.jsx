@@ -39,11 +39,15 @@ export default function TransactionsPage() {
 
   return (
     <>
-      <Header title="Transactions" subtitle={`${allFilteredTx.length} transactions found`} />
-      <div className="p-6 flex flex-col gap-6 max-w-[1400px] mx-auto w-full max-lg:p-4 max-sm:p-3 max-sm:gap-4 max-[360px]:p-2 max-[360px]:gap-3">
-        <div className="flex flex-col gap-4">
-          <TransactionFilters />
-          <div className="flex items-center gap-3 justify-end max-sm:flex-wrap max-[360px]:flex-col max-[360px]:items-stretch">
+      <Header />
+      <div className="px-6 pb-6 flex flex-col gap-5 max-w-[1200px] mx-auto w-full max-sm:px-4 max-sm:gap-4 max-[360px]:px-3 max-[360px]:gap-3">
+        {/* Page title */}
+        <div className="flex items-end justify-between pt-1 max-sm:flex-col max-sm:items-start max-sm:gap-2">
+          <div>
+            <h2 className="text-2xl font-bold text-text-primary font-display max-sm:text-xl">Transactions</h2>
+            <p className="text-sm text-text-muted">{allFilteredTx.length} transactions found</p>
+          </div>
+          <div className="flex items-center gap-3 max-sm:w-full max-[360px]:flex-col max-[360px]:items-stretch">
             <Button variant="secondary" size="sm" icon={Download} onClick={handleExportCSV}>
               Export CSV
             </Button>
@@ -60,11 +64,12 @@ export default function TransactionsPage() {
           </div>
         </div>
 
+        <TransactionFilters />
+
         <Card padding="none" className="animate-fade-in-up">
           <TransactionList />
         </Card>
 
-        {/* Add/Edit Modal */}
         <Modal
           isOpen={modalOpen === 'addTransaction' || modalOpen === 'editTransaction'}
           onClose={() => dispatch(closeModal())}

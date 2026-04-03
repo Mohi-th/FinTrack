@@ -38,9 +38,9 @@ export const ROLES = {
 };
 
 export const CHART_COLORS = [
-  '#3B82F6', '#10B981', '#F59E0B', '#F43F5E',
-  '#8B5CF6', '#06B6D4', '#EC4899', '#64748B',
-  '#84CC16', '#F97316',
+  '#8B5CF6', '#34D399', '#FBBF24', '#FB7185',
+  '#22D3EE', '#F97316', '#EC4899', '#64748B',
+  '#A78BFA', '#6EE7B7',
 ];
 
 export const SORT_OPTIONS = [

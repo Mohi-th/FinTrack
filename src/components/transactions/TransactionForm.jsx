@@ -10,7 +10,7 @@ import { CATEGORIES } from '../../utils/constants';
 import { Loader2 } from 'lucide-react';
 import Button from '../common/Button';
 
-const inputClasses = 'px-4 py-3 bg-bg-primary border border-border rounded-md text-text-primary text-sm transition-all duration-150 h-[42px] focus:border-primary focus:shadow-[0_0_0_3px_var(--color-primary-light)] placeholder:text-text-muted';
+const inputClasses = 'px-4 py-3 bg-bg-elevated border border-glass-border rounded-xl text-text-primary text-sm transition-all duration-200 h-[42px] focus:border-primary focus:shadow-[0_0_0_3px_var(--color-primary-light)] placeholder:text-text-muted';
 
 export default function TransactionForm() {
   const dispatch = useDispatch();
@@ -41,7 +41,6 @@ export default function TransactionForm() {
 
   const categories = CATEGORIES[form.type] || [];
 
-  // Reset category when type changes (if not editing)
   useEffect(() => {
     if (!editingTx) {
       setForm(f => ({ ...f, category: categories[0]?.value || '' }));
@@ -94,12 +93,12 @@ export default function TransactionForm() {
   return (
     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
       {/* Type toggle */}
-      <div className="flex gap-2 bg-bg-primary rounded-md p-1">
+      <div className="flex gap-2 bg-bg-elevated rounded-xl p-1">
         <button
           type="button"
-          className={`flex-1 px-4 py-2 rounded-[6px] text-[0.8125rem] font-semibold transition-all duration-200 ${
+          className={`flex-1 px-4 py-2.5 rounded-lg text-[0.8125rem] font-semibold transition-all duration-200 ${
             form.type === 'expense'
-              ? 'bg-expense text-white shadow-[0_2px_8px_rgba(244,63,94,0.3)]'
+              ? 'bg-gradient-to-br from-expense to-[#E11D48] text-white shadow-[0_2px_12px_rgba(251,113,133,0.25)]'
               : 'text-text-secondary hover:text-text-primary'
           }`}
           onClick={() => handleChange('type', 'expense')}
@@ -109,9 +108,9 @@ export default function TransactionForm() {
         </button>
         <button
           type="button"
-          className={`flex-1 px-4 py-2 rounded-[6px] text-[0.8125rem] font-semibold transition-all duration-200 ${
+          className={`flex-1 px-4 py-2.5 rounded-lg text-[0.8125rem] font-semibold transition-all duration-200 ${
             form.type === 'income'
-              ? 'bg-income text-white shadow-[0_2px_8px_rgba(16,185,129,0.3)]'
+              ? 'bg-gradient-to-br from-income to-[#059669] text-white shadow-[0_2px_12px_rgba(52,211,153,0.25)]'
               : 'text-text-secondary hover:text-text-primary'
           }`}
           onClick={() => handleChange('type', 'income')}
@@ -184,7 +183,7 @@ export default function TransactionForm() {
       </div>
 
       {/* Actions */}
-      <div className="flex justify-end gap-3 pt-3 border-t border-border">
+      <div className="flex justify-end gap-3 pt-3 border-t border-glass-border">
         <Button variant="ghost" onClick={() => dispatch(closeModal())} disabled={loading}>Cancel</Button>
         <Button type="submit" variant={form.type === 'income' ? 'success' : 'primary'} disabled={loading}>
           {loading ? (

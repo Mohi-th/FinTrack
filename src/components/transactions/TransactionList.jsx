@@ -73,24 +73,24 @@ export default function TransactionList() {
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Transaction</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Category</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Date</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Amount</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Type</th>
-              {isAdmin && <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border whitespace-nowrap">Actions</th>}
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-glass-border whitespace-nowrap">Transaction</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-glass-border whitespace-nowrap">Category</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-glass-border whitespace-nowrap">Date</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-glass-border whitespace-nowrap">Amount</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-glass-border whitespace-nowrap">Type</th>
+              {isAdmin && <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-glass-border whitespace-nowrap">Actions</th>}
             </tr>
           </thead>
           <tbody>
             {transactions.map((tx, i) => (
-              <tr key={tx.id} className="animate-fade-in-up hover:bg-bg-elevated" style={{ animationDelay: `${i * 30}ms`, opacity: 0 }}>
-                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle last:border-b-0">
+              <tr key={tx.id} className="animate-fade-in-up hover:bg-bg-hover" style={{ animationDelay: `${i * 30}ms`, opacity: 0 }}>
+                <td className="px-4 py-3 border-b border-glass-border text-[0.8125rem] align-middle last:border-b-0">
                   <div className="flex items-center gap-3">
                     <CategoryIcon category={tx.category} size={16} />
                     <span className="font-semibold text-text-primary whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">{tx.description}</span>
                   </div>
                 </td>
-                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
+                <td className="px-4 py-3 border-b border-glass-border text-[0.8125rem] align-middle">
                   <span
                     className="font-semibold text-[0.8125rem]"
                     style={{ color: getCategoryColor(tx.category) }}
@@ -98,17 +98,17 @@ export default function TransactionList() {
                     {getCategoryLabel(tx.category)}
                   </span>
                 </td>
-                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle text-text-secondary whitespace-nowrap">{formatDate(tx.date)}</td>
-                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
+                <td className="px-4 py-3 border-b border-glass-border text-[0.8125rem] align-middle text-text-secondary whitespace-nowrap">{formatDate(tx.date)}</td>
+                <td className="px-4 py-3 border-b border-glass-border text-[0.8125rem] align-middle">
                   <span className={`font-bold ${tx.type === 'income' ? 'text-income' : 'text-expense'}`}>
                     {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
                   </span>
                 </td>
-                <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
+                <td className="px-4 py-3 border-b border-glass-border text-[0.8125rem] align-middle">
                   <Badge variant={tx.type}>{tx.type}</Badge>
                 </td>
                 {isAdmin && (
-                  <td className="px-4 py-3 border-b border-border text-[0.8125rem] align-middle">
+                  <td className="px-4 py-3 border-b border-glass-border text-[0.8125rem] align-middle">
                     <div className="flex items-center gap-1">
                       <button className="p-2 rounded-[6px] text-text-muted transition-all duration-150 hover:text-primary hover:bg-primary-light" onClick={() => handleEdit(tx)} title="Edit">
                         <Edit2 size={15} />
@@ -128,7 +128,7 @@ export default function TransactionList() {
       {/* Mobile card list */}
       <div className="hidden max-md:flex flex-col gap-2">
         {transactions.map((tx, i) => (
-          <div key={tx.id} className="px-4 py-3 border-b border-border animate-fade-in-up max-[360px]:px-3" style={{ animationDelay: `${i * 30}ms`, opacity: 0 }}>
+          <div key={tx.id} className="px-4 py-3 border-b border-glass-border animate-fade-in-up max-[360px]:px-3" style={{ animationDelay: `${i * 30}ms`, opacity: 0 }}>
             <div className="flex items-center gap-3">
               <CategoryIcon category={tx.category} size={16} />
               <div className="flex-1 flex flex-col min-w-0">
@@ -160,7 +160,7 @@ export default function TransactionList() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between p-4 border-t border-border max-md:flex-col max-md:gap-3">
+        <div className="flex items-center justify-between p-4 border-t border-glass-border max-md:flex-col max-md:gap-3">
           <span className="text-xs text-text-muted">
             Showing {(currentPage - 1) * 10 + 1}–{Math.min(currentPage * 10, total)} of {total}
           </span>

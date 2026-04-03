@@ -5,7 +5,7 @@ import { useDebouncedCallback } from '../../utils/useDebounce';
 import { Search, X, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import { CATEGORIES, SORT_OPTIONS } from '../../utils/constants';
 
-const inputClasses = 'px-4 py-2 bg-bg-primary border border-border rounded-md text-text-primary text-[0.8125rem] h-[38px] transition-all duration-150 focus:border-primary focus:shadow-[0_0_0_3px_var(--color-primary-light)] placeholder:text-text-muted';
+const inputClasses = 'px-4 py-2 bg-bg-elevated border border-glass-border rounded-xl text-text-primary text-[0.8125rem] h-[38px] transition-all duration-200 focus:border-primary focus:shadow-[0_0_0_3px_var(--color-primary-light)] placeholder:text-text-muted';
 
 const selectClasses = `${inputClasses} cursor-pointer flex-1 min-w-0`;
 
@@ -63,11 +63,11 @@ export default function TransactionFilters() {
             placeholder="Search by name or category..."
             value={localSearch}
             onChange={handleSearchChange}
-            className={`${inputClasses} w-full !pl-9 !h-[42px] !rounded-lg`}
+            className={`${inputClasses} w-full !pl-9 !h-[42px]`}
           />
           {localSearch && (
             <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted p-1 rounded-[6px] transition-all duration-150 hover:text-text-primary hover:bg-bg-elevated"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted p-1 rounded-full transition-all duration-150 hover:text-text-primary hover:bg-bg-hover"
               onClick={handleClearSearch}
             >
               <X size={14} />
@@ -99,8 +99,8 @@ export default function TransactionFilters() {
             onClick={() => { setSortOpen(!sortOpen); setFiltersOpen(false); }}
             className={`flex items-center justify-center w-[42px] h-[42px] rounded-lg transition-all duration-200 shrink-0 ${
               sortOpen
-                ? 'bg-primary text-white shadow-[0_2px_10px_rgba(59,130,246,0.35)]'
-                : 'bg-bg-secondary border border-border text-text-secondary hover:text-text-primary hover:border-text-muted'
+                ? 'bg-gradient-to-br from-primary to-[#6D28D9] text-white shadow-[0_2px_12px_rgba(139,92,246,0.3)]'
+                : 'glass-card-static text-text-secondary hover:text-text-primary hover:border-glass-border-hover'
             }`}
             title="Sort"
           >
@@ -109,7 +109,7 @@ export default function TransactionFilters() {
 
           {/* Sort dropdown */}
           {sortOpen && (
-            <div className="absolute right-0 top-[calc(100%+8px)] bg-bg-secondary border border-border rounded-lg shadow-xl z-50 min-w-[180px] py-1 animate-fade-in">
+            <div className="absolute right-0 top-[calc(100%+8px)] glass-card-static shadow-xl z-50 min-w-[180px] py-1 animate-fade-in" style={{ borderRadius: '12px' }}>
               {SORT_OPTIONS.map(s => (
                 <button
                   key={s.value}
@@ -138,7 +138,7 @@ export default function TransactionFilters() {
         }`}
       >
         <div className="overflow-hidden">
-          <div className="grid grid-cols-4 gap-3 p-4 bg-bg-secondary/50 border border-border rounded-lg max-lg:grid-cols-2 max-[400px]:grid-cols-1">
+          <div className="grid grid-cols-4 gap-3 p-4 glass-card-static max-lg:grid-cols-2 max-[400px]:grid-cols-1">
             {/* Type filter */}
             <div className="flex flex-col gap-1.5">
               <label className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Type</label>
