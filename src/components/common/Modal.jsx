@@ -42,11 +42,11 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 bg-bg-overlay backdrop-blur-[8px] flex items-center justify-center z-[200] p-4 animate-fade-in max-sm:items-end max-sm:p-3 max-[360px]:p-2"
+      className="fixed inset-0 bg-bg-overlay backdrop-blur-[8px] flex items-center justify-center z-[200] p-4 animate-fade-in max-sm:pb-24 max-[360px]:p-2 max-[360px]:pb-24"
       onClick={handleOverlayClick}
     >
       <div
-        className={`glass-card-static w-full max-h-[90vh] flex flex-col shadow-lg animate-scale-in max-sm:rounded-b-none max-sm:max-h-[85vh] ${sizeClasses[size]}`}
+        className={`glass-card-static w-full max-h-[90vh] flex flex-col shadow-lg animate-scale-in max-sm:max-h-[80vh] ${sizeClasses[size]}`}
         style={{ borderRadius: '20px' }}
         ref={modalRef}
       >
