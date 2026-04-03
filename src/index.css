@@ -5,58 +5,28 @@
 
 @import "tailwindcss";
 
-/* ---------- Design Tokens via @theme ---------- */
+/* ---------- Design Tokens via @theme (hex only — Tailwind v4 compatible) ---------- */
 @theme {
   /* Aurora Background */
   --color-bg-deep: #070B14;
   --color-bg-primary: #0B1020;
   --color-bg-secondary: #0F1628;
-  --color-bg-elevated: rgba(255, 255, 255, 0.05);
-  --color-bg-hover: rgba(255, 255, 255, 0.08);
-  --color-bg-overlay: rgba(7, 11, 20, 0.88);
-
-  /* Glass — Liquid glass effect (more opaque, richer) */
-  --color-glass-bg: rgba(15, 22, 40, 0.6);
-  --color-glass-bg-hover: rgba(20, 28, 50, 0.7);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
-  --color-glass-border-hover: rgba(255, 255, 255, 0.16);
-  --color-glass-glow: rgba(139, 92, 246, 0.08);
 
   /* Brand — Violet-led */
   --color-primary: #8B5CF6;
   --color-primary-hover: #7C3AED;
-  --color-primary-light: rgba(139, 92, 246, 0.12);
-  --color-primary-glow: rgba(139, 92, 246, 0.35);
 
   /* Semantic */
   --color-income: #34D399;
-  --color-income-light: rgba(52, 211, 153, 0.12);
-  --color-income-glow: rgba(52, 211, 153, 0.3);
   --color-expense: #FB7185;
-  --color-expense-light: rgba(251, 113, 133, 0.12);
-  --color-expense-glow: rgba(251, 113, 133, 0.3);
   --color-warning: #FBBF24;
-  --color-warning-light: rgba(251, 191, 36, 0.12);
   --color-info: #22D3EE;
-  --color-info-light: rgba(34, 211, 238, 0.12);
 
   /* Text */
   --color-text-primary: #F1F5F9;
   --color-text-secondary: #94A3B8;
   --color-text-muted: #475569;
   --color-text-inverse: #0A0E1A;
-
-  /* Borders */
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(139, 92, 246, 0.4);
-
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.15);
-  --shadow-glow-income: 0 0 20px rgba(52, 211, 153, 0.15);
-  --shadow-glow-expense: 0 0 20px rgba(251, 113, 133, 0.15);
 
   /* Border radius */
   --radius-sm: 8px;
@@ -69,12 +39,6 @@
   /* Fonts */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Outfit', 'Inter', system-ui, sans-serif;
-
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Chart colors */
   --color-chart-1: #8B5CF6;
@@ -89,6 +53,53 @@
   /* Layout */
   --spacing-header: 64px;
   --spacing-dock: 72px;
+}
+
+/* ---------- rgba() tokens — wrapped in @layer base to survive Tailwind v4 builds ---------- */
+@layer base {
+  :root {
+    /* Background rgba */
+    --color-bg-elevated: rgba(255, 255, 255, 0.05);
+    --color-bg-hover: rgba(255, 255, 255, 0.08);
+    --color-bg-overlay: rgba(7, 11, 20, 0.88);
+
+    /* Glass — Liquid glass */
+    --color-glass-bg: rgba(15, 22, 40, 0.6);
+    --color-glass-bg-hover: rgba(20, 28, 50, 0.7);
+    --color-glass-border: rgba(255, 255, 255, 0.1);
+    --color-glass-border-hover: rgba(255, 255, 255, 0.16);
+    --color-glass-glow: rgba(139, 92, 246, 0.08);
+
+    /* Brand rgba */
+    --color-primary-light: rgba(139, 92, 246, 0.12);
+    --color-primary-glow: rgba(139, 92, 246, 0.35);
+
+    /* Semantic rgba */
+    --color-income-light: rgba(52, 211, 153, 0.12);
+    --color-income-glow: rgba(52, 211, 153, 0.3);
+    --color-expense-light: rgba(251, 113, 133, 0.12);
+    --color-expense-glow: rgba(251, 113, 133, 0.3);
+    --color-warning-light: rgba(251, 191, 36, 0.12);
+    --color-info-light: rgba(34, 211, 238, 0.12);
+
+    /* Borders */
+    --color-border: rgba(255, 255, 255, 0.06);
+    --color-border-hover: rgba(139, 92, 246, 0.4);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.15);
+    --shadow-glow-income: 0 0 20px rgba(52, 211, 153, 0.15);
+    --shadow-glow-expense: 0 0 20px rgba(251, 113, 133, 0.15);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 }
 
 /* ---------- Light Theme Override ---------- */
@@ -304,29 +315,48 @@
 
 /* ---------- Glass Card ---------- */
 .glass-card {
-  background: var(--color-glass-bg);
+  background: color-mix(in srgb, #0F1628 60%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-glass-border);
-  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, #ffffff 10%, transparent);
+  border-radius: 16px;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 24px color-mix(in srgb, #000 15%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 4%, transparent);
 }
 
 .glass-card:hover {
-  background: var(--color-glass-bg-hover);
-  border-color: var(--color-glass-border-hover);
-  box-shadow: var(--shadow-glow), 0 8px 32px rgba(0, 0, 0, 0.2);
+  background: color-mix(in srgb, #141C32 70%, transparent);
+  border-color: color-mix(in srgb, #ffffff 16%, transparent);
+  box-shadow: 0 0 30px color-mix(in srgb, #8B5CF6 15%, transparent), 0 8px 32px color-mix(in srgb, #000 20%, transparent);
   transform: translateY(-2px);
 }
 
 .glass-card-static {
-  background: var(--color-glass-bg);
+  background: color-mix(in srgb, #0F1628 60%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-glass-border);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border: 1px solid color-mix(in srgb, #ffffff 10%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px color-mix(in srgb, #000 12%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 3%, transparent);
+}
+
+/* Light theme glass overrides */
+[data-theme="light"] .glass-card {
+  background: color-mix(in srgb, #ffffff 65%, transparent);
+  border-color: color-mix(in srgb, #8B5CF6 8%, transparent);
+  box-shadow: 0 4px 24px color-mix(in srgb, #8B5CF6 6%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 50%, transparent);
+}
+
+[data-theme="light"] .glass-card:hover {
+  background: color-mix(in srgb, #ffffff 80%, transparent);
+  border-color: color-mix(in srgb, #8B5CF6 15%, transparent);
+  box-shadow: 0 0 30px color-mix(in srgb, #8B5CF6 6%, transparent), 0 8px 32px color-mix(in srgb, #8B5CF6 8%, transparent);
+}
+
+[data-theme="light"] .glass-card-static {
+  background: color-mix(in srgb, #ffffff 65%, transparent);
+  border-color: color-mix(in srgb, #8B5CF6 8%, transparent);
+  box-shadow: 0 4px 24px color-mix(in srgb, #8B5CF6 4%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 50%, transparent);
 }
 
 /* ---------- Floating Dock ---------- */
@@ -343,12 +373,12 @@
   align-items: center;
   gap: 4px;
   padding: 10px 16px;
-  background: rgba(15, 22, 40, 0.7);
+  background: color-mix(in srgb, #0F1628 70%, transparent);
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-full);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border: 1px solid color-mix(in srgb, #ffffff 6%, transparent);
+  border-radius: 9999px;
+  box-shadow: 0 8px 40px color-mix(in srgb, #000 40%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 3%, transparent);
 }
 
 [data-theme="light"] .dock-pill {
