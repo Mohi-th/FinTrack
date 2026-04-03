@@ -64,9 +64,10 @@ export default function Header() {
                 to={item.path}
                 className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                   isActive
-                    ? 'bg-[rgba(255,255,255,0.12)] text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]'
+                    ? 'text-text-primary'
                     : 'text-text-muted hover:text-text-secondary'
                 }`}
+                style={isActive ? { background: 'color-mix(in srgb, #ffffff 12%, transparent)', boxShadow: 'inset 0 1px 0 color-mix(in srgb, #ffffff 6%, transparent)' } : {}}
               >
                 {item.label}
               </NavLink>
@@ -112,9 +113,10 @@ export default function Header() {
 
           {/* Theme Toggle */}
           <button
-            className={`flex items-center justify-center w-10 h-10 rounded-full text-text-muted transition-all duration-300 hover:text-text-primary border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.03)] ${
+            className={`flex items-center justify-center w-10 h-10 rounded-full text-text-muted transition-all duration-300 hover:text-text-primary ${
               tilting ? 'animate-theme-tilt' : ''
             }`}
+            style={{ border: '1px solid color-mix(in srgb, #ffffff 6%, transparent)', background: 'color-mix(in srgb, #ffffff 3%, transparent)' }}
             onClick={handleThemeToggle}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
