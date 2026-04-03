@@ -55,44 +55,44 @@
   --spacing-dock: 72px;
 }
 
-/* ---------- color-mix() tokens — survives Tailwind v4 production builds ---------- */
+/* ---------- Transparent tokens — 8-digit hex (#RRGGBBAA) for universal support ---------- */
 @layer base {
   :root {
     /* Background */
-    --color-bg-elevated: color-mix(in srgb, #ffffff 5%, transparent);
-    --color-bg-hover: color-mix(in srgb, #ffffff 8%, transparent);
-    --color-bg-overlay: color-mix(in srgb, #070B14 88%, transparent);
+    --color-bg-elevated: #ffffff0d;
+    --color-bg-hover: #ffffff14;
+    --color-bg-overlay: #070B14e0;
 
     /* Glass — Liquid glass */
-    --color-glass-bg: color-mix(in srgb, #0F1628 60%, transparent);
-    --color-glass-bg-hover: color-mix(in srgb, #141C32 70%, transparent);
-    --color-glass-border: color-mix(in srgb, #ffffff 10%, transparent);
-    --color-glass-border-hover: color-mix(in srgb, #ffffff 16%, transparent);
-    --color-glass-glow: color-mix(in srgb, #8B5CF6 8%, transparent);
+    --color-glass-bg: #0F162899;
+    --color-glass-bg-hover: #141C32b3;
+    --color-glass-border: #ffffff1a;
+    --color-glass-border-hover: #ffffff29;
+    --color-glass-glow: #8B5CF614;
 
     /* Brand */
-    --color-primary-light: color-mix(in srgb, #8B5CF6 12%, transparent);
-    --color-primary-glow: color-mix(in srgb, #8B5CF6 35%, transparent);
+    --color-primary-light: #8B5CF61f;
+    --color-primary-glow: #8B5CF659;
 
     /* Semantic */
-    --color-income-light: color-mix(in srgb, #34D399 12%, transparent);
-    --color-income-glow: color-mix(in srgb, #34D399 30%, transparent);
-    --color-expense-light: color-mix(in srgb, #FB7185 12%, transparent);
-    --color-expense-glow: color-mix(in srgb, #FB7185 30%, transparent);
-    --color-warning-light: color-mix(in srgb, #FBBF24 12%, transparent);
-    --color-info-light: color-mix(in srgb, #22D3EE 12%, transparent);
+    --color-income-light: #34D3991f;
+    --color-income-glow: #34D3994d;
+    --color-expense-light: #FB71851f;
+    --color-expense-glow: #FB71854d;
+    --color-warning-light: #FBBF241f;
+    --color-info-light: #22D3EE1f;
 
     /* Borders */
-    --color-border: color-mix(in srgb, #ffffff 6%, transparent);
-    --color-border-hover: color-mix(in srgb, #8B5CF6 40%, transparent);
+    --color-border: #ffffff0f;
+    --color-border-hover: #8B5CF666;
 
     /* Shadows */
-    --shadow-sm: 0 1px 3px color-mix(in srgb, #000 40%, transparent);
-    --shadow-md: 0 4px 16px color-mix(in srgb, #000 30%, transparent);
-    --shadow-lg: 0 12px 40px color-mix(in srgb, #000 40%, transparent);
-    --shadow-glow: 0 0 30px color-mix(in srgb, #8B5CF6 15%, transparent);
-    --shadow-glow-income: 0 0 20px color-mix(in srgb, #34D399 15%, transparent);
-    --shadow-glow-expense: 0 0 20px color-mix(in srgb, #FB7185 15%, transparent);
+    --shadow-sm: 0 1px 3px #00000066;
+    --shadow-md: 0 4px 16px #0000004d;
+    --shadow-lg: 0 12px 40px #00000066;
+    --shadow-glow: 0 0 30px #8B5CF626;
+    --shadow-glow-income: 0 0 20px #34D39926;
+    --shadow-glow-expense: 0 0 20px #FB718526;
 
     /* Transitions */
     --transition-fast: 150ms ease;
@@ -107,28 +107,28 @@
   --color-bg-deep: #F5F3FF;
   --color-bg-primary: #FAF9FE;
   --color-bg-secondary: #FFFFFF;
-  --color-bg-elevated: color-mix(in srgb, #8B5CF6 4%, transparent);
-  --color-bg-hover: color-mix(in srgb, #8B5CF6 6%, transparent);
-  --color-bg-overlay: color-mix(in srgb, #FAF9FE 90%, transparent);
+  --color-bg-elevated: #8B5CF60a;
+  --color-bg-hover: #8B5CF60f;
+  --color-bg-overlay: #FAF9FEe6;
 
-  --color-glass-bg: color-mix(in srgb, #ffffff 65%, transparent);
-  --color-glass-bg-hover: color-mix(in srgb, #ffffff 80%, transparent);
-  --color-glass-border: color-mix(in srgb, #8B5CF6 8%, transparent);
-  --color-glass-border-hover: color-mix(in srgb, #8B5CF6 15%, transparent);
-  --color-glass-glow: color-mix(in srgb, #8B5CF6 4%, transparent);
+  --color-glass-bg: #ffffffa6;
+  --color-glass-bg-hover: #ffffffcc;
+  --color-glass-border: #8B5CF614;
+  --color-glass-border-hover: #8B5CF626;
+  --color-glass-glow: #8B5CF60a;
 
   --color-text-primary: #0F172A;
   --color-text-secondary: #475569;
   --color-text-muted: #94A3B8;
   --color-text-inverse: #F1F5F9;
 
-  --color-border: color-mix(in srgb, #8B5CF6 8%, transparent);
-  --color-border-hover: color-mix(in srgb, #8B5CF6 30%, transparent);
+  --color-border: #8B5CF614;
+  --color-border-hover: #8B5CF64d;
 
-  --shadow-sm: 0 1px 3px color-mix(in srgb, #8B5CF6 6%, transparent);
-  --shadow-md: 0 4px 16px color-mix(in srgb, #8B5CF6 6%, transparent);
-  --shadow-lg: 0 12px 40px color-mix(in srgb, #8B5CF6 8%, transparent);
-  --shadow-glow: 0 0 30px color-mix(in srgb, #8B5CF6 6%, transparent);
+  --shadow-sm: 0 1px 3px #8B5CF60f;
+  --shadow-md: 0 4px 16px #8B5CF60f;
+  --shadow-lg: 0 12px 40px #8B5CF614;
+  --shadow-glow: 0 0 30px #8B5CF60f;
 }
 
 /* ---------- Base Styles ---------- */
@@ -202,12 +202,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, #8B5CF6 20%, transparent);
+    background: #8B5CF633;
     border-radius: var(--radius-full);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in srgb, #8B5CF6 35%, transparent);
+    background: #8B5CF659;
   }
 
   /* Recharts */
@@ -258,7 +258,7 @@
 .aurora-bg::before {
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, color-mix(in srgb, #8B5CF6 18%, transparent), transparent 70%);
+  background: radial-gradient(circle, #8B5CF62e, transparent 70%);
   top: -15%;
   right: -8%;
   animation-delay: 0s;
@@ -267,7 +267,7 @@
 .aurora-bg::after {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, color-mix(in srgb, #06B6D4 15%, transparent), transparent 70%);
+  background: radial-gradient(circle, #06B6D426, transparent 70%);
   bottom: -15%;
   left: -8%;
   animation-delay: -10s;
@@ -284,7 +284,7 @@
 .aurora-blob-1 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, color-mix(in srgb, #10B981 10%, transparent), transparent 70%);
+  background: radial-gradient(circle, #10B9811a, transparent 70%);
   top: 40%;
   left: 30%;
   animation-delay: -5s;
@@ -293,19 +293,19 @@
 .aurora-blob-2 {
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, color-mix(in srgb, #FBBF24 6%, transparent), transparent 70%);
+  background: radial-gradient(circle, #FBBF240f, transparent 70%);
   top: 60%;
   right: 20%;
   animation-delay: -15s;
 }
 
 [data-theme="light"] .aurora-bg::before {
-  background: radial-gradient(circle, color-mix(in srgb, #8B5CF6 8%, transparent), transparent 70%);
+  background: radial-gradient(circle, #8B5CF614, transparent 70%);
   opacity: 0.7;
 }
 
 [data-theme="light"] .aurora-bg::after {
-  background: radial-gradient(circle, color-mix(in srgb, #06B6D4 6%, transparent), transparent 70%);
+  background: radial-gradient(circle, #06B6D40f, transparent 70%);
   opacity: 0.7;
 }
 
@@ -315,48 +315,48 @@
 
 /* ---------- Glass Card ---------- */
 .glass-card {
-  background: color-mix(in srgb, #0F1628 60%, transparent);
+  background: #0F162899;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid color-mix(in srgb, #ffffff 10%, transparent);
+  border: 1px solid #ffffff1a;
   border-radius: 16px;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 24px color-mix(in srgb, #000 15%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 4%, transparent);
+  box-shadow: 0 4px 24px #00000026, inset 0 1px 0 #ffffff0a;
 }
 
 .glass-card:hover {
-  background: color-mix(in srgb, #141C32 70%, transparent);
-  border-color: color-mix(in srgb, #ffffff 16%, transparent);
-  box-shadow: 0 0 30px color-mix(in srgb, #8B5CF6 15%, transparent), 0 8px 32px color-mix(in srgb, #000 20%, transparent);
+  background: #141C32b3;
+  border-color: #ffffff29;
+  box-shadow: 0 0 30px #8B5CF626, 0 8px 32px #00000033;
   transform: translateY(-2px);
 }
 
 .glass-card-static {
-  background: color-mix(in srgb, #0F1628 60%, transparent);
+  background: #0F162899;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid color-mix(in srgb, #ffffff 10%, transparent);
+  border: 1px solid #ffffff1a;
   border-radius: 16px;
-  box-shadow: 0 4px 24px color-mix(in srgb, #000 12%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 3%, transparent);
+  box-shadow: 0 4px 24px #0000001f, inset 0 1px 0 #ffffff08;
 }
 
 /* Light theme glass overrides */
 [data-theme="light"] .glass-card {
-  background: color-mix(in srgb, #ffffff 65%, transparent);
-  border-color: color-mix(in srgb, #8B5CF6 8%, transparent);
-  box-shadow: 0 4px 24px color-mix(in srgb, #8B5CF6 6%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 50%, transparent);
+  background: #ffffffa6;
+  border-color: #8B5CF614;
+  box-shadow: 0 4px 24px #8B5CF60f, inset 0 1px 0 #ffffff80;
 }
 
 [data-theme="light"] .glass-card:hover {
-  background: color-mix(in srgb, #ffffff 80%, transparent);
-  border-color: color-mix(in srgb, #8B5CF6 15%, transparent);
-  box-shadow: 0 0 30px color-mix(in srgb, #8B5CF6 6%, transparent), 0 8px 32px color-mix(in srgb, #8B5CF6 8%, transparent);
+  background: #ffffffcc;
+  border-color: #8B5CF626;
+  box-shadow: 0 0 30px #8B5CF60f, 0 8px 32px #8B5CF614;
 }
 
 [data-theme="light"] .glass-card-static {
-  background: color-mix(in srgb, #ffffff 65%, transparent);
-  border-color: color-mix(in srgb, #8B5CF6 8%, transparent);
-  box-shadow: 0 4px 24px color-mix(in srgb, #8B5CF6 4%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 50%, transparent);
+  background: #ffffffa6;
+  border-color: #8B5CF614;
+  box-shadow: 0 4px 24px #8B5CF60a, inset 0 1px 0 #ffffff80;
 }
 
 /* ---------- Floating Dock ---------- */
@@ -373,18 +373,18 @@
   align-items: center;
   gap: 4px;
   padding: 10px 16px;
-  background: color-mix(in srgb, #0F1628 70%, transparent);
+  background: #0F1628b3;
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
-  border: 1px solid color-mix(in srgb, #ffffff 6%, transparent);
+  border: 1px solid #ffffff0f;
   border-radius: 9999px;
-  box-shadow: 0 8px 40px color-mix(in srgb, #000 40%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 3%, transparent);
+  box-shadow: 0 8px 40px #00000066, inset 0 1px 0 #ffffff08;
 }
 
 [data-theme="light"] .dock-pill {
-  background: color-mix(in srgb, #ffffff 75%, transparent);
-  border-color: color-mix(in srgb, #8B5CF6 10%, transparent);
-  box-shadow: 0 8px 32px color-mix(in srgb, #8B5CF6 8%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 50%, transparent);
+  background: #ffffffbf;
+  border-color: #8B5CF61a;
+  box-shadow: 0 8px 32px #8B5CF614, inset 0 1px 0 #ffffff80;
 }
 
 .dock-item {
@@ -406,7 +406,7 @@
 
 .dock-item.active {
   color: var(--color-primary);
-  filter: drop-shadow(0 0 8px color-mix(in srgb, #8B5CF6 50%, transparent));
+  filter: drop-shadow(0 0 8px #8B5CF680);
 }
 
 .dock-tooltip {
@@ -415,7 +415,7 @@
   left: 50%;
   transform: translateX(-50%) scale(0.8);
   padding: 4px 10px;
-  background: color-mix(in srgb, #000 80%, transparent);
+  background: #000000cc;
   color: white;
   font-size: 11px;
   font-weight: 600;
@@ -510,8 +510,8 @@
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, #8B5CF6 20%, transparent); }
-  50% { box-shadow: 0 0 24px color-mix(in srgb, #8B5CF6 40%, transparent); }
+  0%, 100% { box-shadow: 0 0 8px #8B5CF633; }
+  50% { box-shadow: 0 0 24px #8B5CF666; }
 }
 
 @keyframes spin {
@@ -537,8 +537,8 @@
 }
 
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 12px color-mix(in srgb, #8B5CF6 20%, transparent); }
-  50% { box-shadow: 0 0 24px color-mix(in srgb, #8B5CF6 35%, transparent); }
+  0%, 100% { box-shadow: 0 0 12px #8B5CF633; }
+  50% { box-shadow: 0 0 24px #8B5CF659; }
 }
 
 /* ---------- Utility Animation Classes ---------- */
