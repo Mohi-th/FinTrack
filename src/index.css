@@ -224,6 +224,17 @@
     filter: none;
   }
 
+  /* Select option elements need solid colors (native dropdowns ignore transparency) */
+  select option {
+    background-color: #0F1628;
+    color: #F1F5F9;
+  }
+
+  [data-theme="light"] select option {
+    background-color: #FFFFFF;
+    color: #0F172A;
+  }
+
   /* Hide number spinners */
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
