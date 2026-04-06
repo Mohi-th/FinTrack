@@ -120,7 +120,7 @@ const transactionSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTransactions.fulfilled, (state, action) => {
-        state.items = action.payload;
+        state.items = Array.isArray(action.payload) ? action.payload : [];
         state.fetchLoading = false;
       })
       .addCase(fetchTransactions.rejected, (state, action) => {

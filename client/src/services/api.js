@@ -16,7 +16,14 @@ API.interceptors.request.use((config) => {
 
 // Handle 401 responses globally → auto logout
 API.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // If the server returns HTML (e.g., a proxy 404 falling back to index.html), reject it
+    const contentType = response.headers['content-type'];
+    if (contentType && contentType.toLowerCase().includes('text/html')) {
+      return Promise.reject(new Error('Received HTML instead of JSON. Check the API URL or server proxy.'));
+    }
+    return response;
+  },
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('fintrack_token');
