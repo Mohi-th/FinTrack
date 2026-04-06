@@ -72,6 +72,7 @@ router.post(
     body('password').notEmpty().withMessage('Password is required'),
   ],
   async (req, res) => {
+    
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -79,6 +80,7 @@ router.post(
       }
 
       const { email, password } = req.body;
+      console.log(email, password)
 
       // Find user with password field included
       const user = await User.findOne({ email }).select('+password');
